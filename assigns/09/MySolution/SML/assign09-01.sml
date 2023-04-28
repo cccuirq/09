@@ -41,7 +41,18 @@ list_kmerge2
 (xs1: int list
 ,xs2: int list, ret: int list -> 'a): 'a = ...
 *)
-
+fun
+list_kmerge2
+(xs1: int list
+,xs2: int list, ret: int list -> 'a): 'a = 
+  case xs1 of 
+    nil => ret(xs2)
+  | x1 :: xs1 =>
+    case xs2 of
+      nil => ret(x1::xs1)
+    | x2 :: xs2 =>
+      if (x1 <= x2) then list_kmerge2(xs1, x2 :: xs2, fn hi => ret(x1 :: hi))
+      else list_kmerge2(x1::xs1, xs2, fn helo => ret(x2 :: helo))
 (* ****** ****** *)
 
 (* end of [CS320-2023-Spring-assigns-assign09-01.sml] *)
